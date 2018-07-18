@@ -1,6 +1,6 @@
-class files_exec(
+class files(
   $files = {}){
-  class { 'files_exec::install':
+  class { 'files::install':
     files => $files,
   }
 }

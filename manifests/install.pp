@@ -1,4 +1,4 @@
-class files_exec::install(
+class files::install(
   $files = {}){
 
   $files.each |String $file, Hash $opts| {
