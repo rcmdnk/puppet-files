@@ -19,6 +19,11 @@ class files::install(
     }else{
       $mode = "0644"
     }
+    if has_key($opts, "cwd") {
+      $cwd = $opts["cwd"]
+    }else{
+      $cwd = "/root"
+    }
     file {$file:
       path => $path,
       source => $source,
@@ -32,7 +37,8 @@ class files::install(
         $command = $path + $opts["args"]
       }
       exec {"${file} exec":
-        command => $command
+        command => $command,
+        cwd => $cwd
       }
     }
   }
