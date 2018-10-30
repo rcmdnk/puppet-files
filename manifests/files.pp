@@ -1,7 +1,7 @@
 class files::files(
   $files = {}){
 
-  $files.each |String $file, Hash $opts| {
+  $files.each |String $name, Hash $opts| {
     $path = $opts["path"]
     $source = $opts["source"]
     if has_key($opts, "owner") {
@@ -24,7 +24,7 @@ class files::files(
     }else{
       $cwd = "/root"
     }
-    file {$file:
+    file {$name:
       path => $path,
       source => $source,
       owner => $owner,
@@ -36,7 +36,7 @@ class files::files(
       if has_key($opts, "args") {
         $command = $path + $opts["args"]
       }
-      exec {"${file} exec":
+      exec {"${name} exec":
         command => $command,
         cwd => $cwd
       }

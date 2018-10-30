@@ -1,7 +1,7 @@
 class files::lines(
   $lines = {}){
 
-  $lines.each |String $line, Hash $opts| {
+  $lines.each |String $name, Hash $opts| {
     $path = $opts["path"]
     $line = $opts["line"]
     $match = $opts["match"]
@@ -10,7 +10,7 @@ class files::lines(
     }else{
       $append_on_no_match = false
     }
-    file_line {$line:
+    file_line {$name:
       path => $path,
       line => $line,
       match => $match,
