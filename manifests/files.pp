@@ -24,6 +24,27 @@ class files::files(
     }else{
       $cwd = "/root"
     }
+    if has_key($opts, "recurse") {
+      $recurse = $opts["recurse"]
+    }else{
+      $recurse = false
+    }
+    if $recurse {
+      $directory = dirname($path)
+      exec {"${name}_mkdir":
+        command => "/bin/mkdir -p ${directory}",
+      }
+      if has_key($opts, "owner") {
+        exec {"${name}_owner":
+          command => "/bin/chown ${opts["owner"]} ${directory}",
+        }
+      }
+      if has_key($opts, "group") {
+        exec {"${name}_group":
+          command => "/bin/chgrp ${opts["group"]} ${directory}",
+        }
+      }
+    }
     file {$name:
       path => $path,
       source => $source,

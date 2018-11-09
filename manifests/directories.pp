@@ -4,33 +4,18 @@ class files::directories(
   $directories.each |String $name, Hash $opts| {
     $path = $opts["path"]
     $source = $opts["source"]
+    exec {"${name}_mkdir":
+      command => "/bin/mkdir -p ${path}",
+    }
     if has_key($opts, "owner") {
-      $owner = $opts["owner"]
-    }else{
-      $owner = "root"
+      exec {"${name}_owner":
+        command => "/bin/chown ${opts["owner"]} ${path}",
+      }
     }
     if has_key($opts, "group") {
-      $group = $opts["group"]
-    }else{
-      $group = "root"
-    }
-    if has_key($opts, "mode") {
-      $mode = $opts["mode"]
-    }else{
-      $mode = "0755"
-    }
-    if has_key($opts, "recurse") {
-      $recurse = $opts["recurse"]
-    }else{
-      $recurse = false
-    }
-    file {$name:
-      ensure => directory,
-      path => $path,
-      owner => $owner,
-      group => $group,
-      mode => $mode,
-      recurse => $recurse,
+      exec {"${name}_group":
+        command => "/bin/chgrp ${opts["group"]} ${path}",
+      }
     }
   }
 }
