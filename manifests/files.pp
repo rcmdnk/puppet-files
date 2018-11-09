@@ -24,12 +24,18 @@ class files::files(
     }else{
       $cwd = "/root"
     }
+    if has_key($opts, "recurse") {
+      $recurse = $opts["recurse"]
+    }else{
+      $recurse = "false"
+    }
     file {$name:
       path => $path,
       source => $source,
       owner => $owner,
       group => $group,
       mode => $mode,
+      recurse => $recurse,
     }
     if has_key($opts, "exec") and $opts["exec"] {
       $command = $path
