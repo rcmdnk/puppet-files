@@ -1,7 +1,7 @@
 class files::directories(
   $directories = {}){
 
-  $directories |String $name, Hash $opts| {
+  $directories.each |String $name, Hash $opts| {
     $path = $opts["path"]
     $source = $opts["source"]
     if has_key($opts, "owner") {
