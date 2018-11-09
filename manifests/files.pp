@@ -27,7 +27,7 @@ class files::files(
     if has_key($opts, "recurse") {
       $recurse = $opts["recurse"]
     }else{
-      $recurse = "false"
+      $recurse = false
     }
     file {$name:
       path => $path,
