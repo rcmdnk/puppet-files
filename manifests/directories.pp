@@ -1,7 +1,7 @@
-class files::files(
-  $files = {}){
+class files::directories(
+  $directories = {}){
 
-  $files.each |String $name, Hash $opts| {
+  $directories |String $name, Hash $opts| {
     $path = $opts["path"]
     $source = $opts["source"]
     if has_key($opts, "owner") {
@@ -19,27 +19,12 @@ class files::files(
     }else{
       $mode = "0644"
     }
-    if has_key($opts, "cwd") {
-      $cwd = $opts["cwd"]
-    }else{
-      $cwd = "/root"
-    }
     file {$name:
+      ensure => directory,
       path => $path,
-      source => $source,
       owner => $owner,
       group => $group,
       mode => $mode,
-    }
-    if has_key($opts, "exec") and $opts["exec"] {
-      $command = $path
-      if has_key($opts, "args") {
-        $command = $path + $opts["args"]
-      }
-      exec {"${name} exec":
-        command => $command,
-        cwd => $cwd
-      }
     }
   }
 }
