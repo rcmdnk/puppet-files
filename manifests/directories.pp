@@ -17,7 +17,12 @@ class files::directories(
     if has_key($opts, "mode") {
       $mode = $opts["mode"]
     }else{
-      $mode = "0644"
+      $mode = "0755"
+    }
+    if has_key($opts, "recurse") {
+      $recurse = $opts["recurse"]
+    }else{
+      $recurse = false
     }
     file {$name:
       ensure => directory,
@@ -25,6 +30,7 @@ class files::directories(
       owner => $owner,
       group => $group,
       mode => $mode,
+      recurse => $recurse,
     }
   }
 }
