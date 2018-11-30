@@ -9,6 +9,9 @@ class files(
   class { 'files::files':
     files => $files,
   }
+  class { 'files::links':
+    links => $links,
+  }
   class { 'files::lines':
     lines => $lines,
   }
