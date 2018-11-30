@@ -1,6 +1,7 @@
 class files(
   $directories = {},
   $files = {},
+  $links = {},
   $lines = {},
   ){
   class { 'files::directories':
