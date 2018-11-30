@@ -14,6 +14,11 @@ class files::files(
     }else{
       $group = "root"
     }
+    if has_key($opts, "exec_user") {
+      $exec_user = $opts["exec_user"]
+    }else{
+      $exec_user = "root"
+    }
     if has_key($opts, "mode") {
       $mode = $opts["mode"]
     }else{
@@ -53,7 +58,7 @@ class files::files(
       mode => $mode,
     }
     if has_key($opts, "exec") and $opts["exec"] {
-      $command = $path
+      $command = "sudo -u ${opts["exec_user"]} ${path}"
       if has_key($opts, "args") {
         $command = $path + $opts["args"]
       }
