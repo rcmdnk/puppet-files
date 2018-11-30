@@ -4,6 +4,11 @@ class files::files(
   $files.each |String $name, Hash $opts| {
     $path = $opts["path"]
     $source = $opts["source"]
+    if has_key($opts, "ensure") {
+      $ensure = $opts["ensure"]
+    }else{
+      $ensure = "file"
+    }
     if has_key($opts, "owner") {
       $owner = $opts["owner"]
     }else{
@@ -51,6 +56,7 @@ class files::files(
       }
     }
     file {$name:
+      ensure => $ensure,
       path => $path,
       source => $source,
       owner => $owner,
