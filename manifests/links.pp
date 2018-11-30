@@ -1,4 +1,4 @@
-class files::files(
+class files::links(
   $links = {}){
 
   $links.each |String $name, Hash $opts| {
