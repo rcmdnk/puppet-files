@@ -1,0 +1,19 @@
+{
+  "name": "puppet-files",
+  "version": "0.1.5",
+  "author": "Michiru Kaneda",
+  "summary": "Simple puppet module to install files (and execute them).",
+  "license": "MIT",
+  "source": "https://github.com/mickaneda/puppet-files",
+  "description": "Simple puppet module to install files (and execute them).",
+  "issues_url": "https://github.com/mickaneda/puppet-files/issues",
+  "tags": [
+  ],
+  "project_page": "https://github.com/cern-it-sdc-id/puppet-voms",
+  "requirements": [
+  ],
+  "operatingsystem_support": [
+  ],
+  "dependencies": [
+  ]
+}
