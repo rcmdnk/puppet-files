@@ -17,5 +17,10 @@ class files::directories(
         command => "/bin/chgrp ${opts["group"]} ${path}",
       }
     }
+    if has_key($opts, "mode") {
+      exec {"${name}_mode":
+        command => "/bin/chmod ${opts["mode"]} ${path}",
+      }
+    }
   }
 }
