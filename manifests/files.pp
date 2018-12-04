@@ -58,7 +58,7 @@ class files::files(
       mode => $mode,
     }
     if has_key($opts, "exec") and $opts["exec"] {
-      $command = "sudo -u ${exec_user} ${path}"
+      $command = "/usr/bin/sudo -u ${exec_user} ${path}"
       if has_key($opts, "args") {
         $command = $path + $opts["args"]
       }
