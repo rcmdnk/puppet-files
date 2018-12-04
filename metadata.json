@@ -1,6 +1,6 @@
 {
   "name": "puppet-files",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "author": "Michiru Kaneda",
   "summary": "Simple puppet module to install files (and execute them).",
   "license": "MIT",
