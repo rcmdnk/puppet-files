@@ -2,39 +2,7 @@ class files::files(
   $files = {}){
 
   $files.each |String $name, Hash $opts| {
-    $path = $opts["path"]
-    $source = $opts["source"]
-    if has_key($opts, "owner") {
-      $owner = $opts["owner"]
-    }else{
-      $owner = "root"
-    }
-    if has_key($opts, "group") {
-      $group = $opts["group"]
-    }else{
-      $group = "root"
-    }
-    if has_key($opts, "exec_user") {
-      $exec_user = $opts["exec_user"]
-    }else{
-      $exec_user = "root"
-    }
-    if has_key($opts, "mode") {
-      $mode = $opts["mode"]
-    }else{
-      $mode = "0644"
-    }
-    if has_key($opts, "cwd") {
-      $cwd = $opts["cwd"]
-    }else{
-      $cwd = "/root"
-    }
-    if has_key($opts, "recurse") {
-      $recurse = $opts["recurse"]
-    }else{
-      $recurse = false
-    }
-    if $recurse {
+    if has_key($opts, "recurse") and $opts["recurse"] {
       $directory = dirname($path)
       exec {"${name}_mkdir":
         command => "/bin/mkdir -p ${directory}",
@@ -50,18 +18,29 @@ class files::files(
         }
       }
     }
-    file {$name:
-      path => $path,
-      source => $source,
-      owner => $owner,
-      group => $group,
-      mode => $mode,
+
+    $settings = $opts.filter |$key, $val| {
+      $key != "exec" and $key != "exec_user" and $key != "cwd" and $key != "args"
     }
+    file {$name:
+      * =>  $settings
+    }
+
     if has_key($opts, "exec") and $opts["exec"] {
-      if has_key($opts, "args") {
-        $command = "/usr/bin/sudo -u ${exec_user} ${path} ${opts['args']}"
+      if has_key($opts, "exec_user") {
+        $exec_user = $opts["exec_user"]
       }else{
-        $command = "/usr/bin/sudo -u ${exec_user} ${path}"
+        $exec_user = "root"
+      }
+      if has_key($opts, "cwd") {
+        $cwd = $opts["cwd"]
+      }else{
+        $cwd = "/root"
+      }
+      if has_key($opts, "args") {
+        $command = "/usr/bin/sudo -u ${exec_user} ${opts["path"]} ${opts['args']}"
+      }else{
+        $command = "/usr/bin/sudo -u ${exec_user} ${opts["path"]}"
       }
       exec {"${name} exec":
         command => $command,
