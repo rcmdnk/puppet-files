@@ -10,7 +10,7 @@ class files(
   ){
   $directories_all = deep_merge($directories, $directories_add)
   class { 'files::directories':
-    directories => $directories_add,
+    directories => $directories_all,
   }
   $files_all = deep_merge($files, $files_add)
   class { 'files::files':
