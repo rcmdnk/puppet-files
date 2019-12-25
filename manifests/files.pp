@@ -3,7 +3,7 @@ class files::files(
 
   $files.each |String $name, Hash $opts| {
     if has_key($opts, "recurse") and $opts["recurse"] {
-      $directory = dirname($path)
+      $directory = dirname($opts['path'])
       exec {"${name}_mkdir":
         command => "/bin/mkdir -p ${directory}",
       }
